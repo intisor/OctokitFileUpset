@@ -1,0 +1,33 @@
+# Binaries
+bin/
+obj/
+
+# User-specific files
+*.user
+
+# IDE files
+.vscode/
+.idea/
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# NuGet packages
+packages/
+*.nupkg
+
+# Build results
+*.dll
+*.exe
+*.pdb
+
+# Test results
+TestResults/
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.temp
