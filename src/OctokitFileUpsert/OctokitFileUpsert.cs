@@ -1,4 +1,5 @@
 using System.Net;
+using System.Text;
 using Octokit;
 
 namespace OctokitFileUpsert;
@@ -12,8 +13,14 @@ public static class FileUpsertExtensions
         string filePath,
         string content,
         string commitMessage,
-        string? branch = null)
+        string? branch = null,
+        bool isContentBase64 = false)
     {
+        if (isContentBase64)
+        {
+            var decodedBytes = Convert.FromBase64String(content);
+            content = Encoding.UTF8.GetString(decodedBytes);
+        }
         string? fileSha = null;
         try
         {
@@ -30,12 +37,10 @@ public static class FileUpsertExtensions
 
         if (fileSha == null)
         {
-            // Create new file
             return await client.CreateFile(owner, name, filePath, new CreateFileRequest(commitMessage, content, branch));
         }
         else
         {
-            // Update existing file
             return await client.UpdateFile(owner, name, filePath, new UpdateFileRequest(commitMessage, content, fileSha, branch));
         }
     }
